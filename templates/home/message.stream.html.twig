@@ -1,0 +1,8 @@
+{# message.stream.html.twig #}
+<turbo-stream action="append" target="messages"> {# bien verifier l'id il faut que il soit le meme #}
+    <template>
+        <article> 
+            {{ message.content }}
+        </article>
+    </template>
+</turbo-stream>

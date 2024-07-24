@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block body %}
+	<header class="container-fluid">
+		<h1>catchat</h1>
+	</header>
+
+	<main class="container">
+		<h2>Derniers messages</h2>
+
+		<div class="grid" id="messages"></div>
+
+		{{ form_start(form, {'attr': {'data-turbo-frame': '_top'}}) }}
+		{{ form_widget(form) }}
+		<button type="submit">Envoyer</button>
+		{{ form_end(form) }}
+	</main>
+<p>
+	Arret de la video 2 de chat a 11:28
+	</p>
+
+	<p>
+		Etape 1 :  Ne pas oublier  d'installer turbo avec : composer require symfony/ux-turbo
+	</p>
+	<p>
+		Etape 2 :  Ne pas oublier  d'installer Mercure avec : composer require mercure
+	</p>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+	{{ parent() }}
+	<script>
+		const eventSource = new EventSource("{{ mercure('chat')|escape('js') }}");
+eventSource.onmessage = event => { // Will be called every time an update is published by the server
+const messages = document.getElementByid('messages');
+messages.append(event.data);
+console.log(JSON.parse(event.data));
+}
+	</script>
+
+{% endblock %}
